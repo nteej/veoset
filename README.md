@@ -1,61 +1,256 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# VEOset - Energy Asset Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A comprehensive Laravel 12 Filament 3 backend with API, API documentation & Flutter mobile app for energy business asset information and service tasks management.
 
-## About Laravel
+## 🎯 Project Overview
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+VEOset is designed for daily energy business operations, providing real-time information for customers, VEO LCS, and service companies. The system enables maintenance personnel to access prevention maintenance schedules and manage asset lifecycle efficiently.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Key Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Asset Information Management** - Track and manage energy assets across multiple sites
+- **Service Task Management** - Schedule and monitor maintenance activities
+- **Real-time Data Access** - Live information for all stakeholders
+- **Prevention Maintenance Scheduling** - Proactive maintenance planning
+- **Multi-platform Support** - iOS, Android apps and web interface
+- **Role-based Access** - Secure access for different user types
 
-## Learning Laravel
+## 🏗️ System Architecture
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Data Flow
+```
+Main Control Panel (VEO) → Multiple Sites → Multiple Assets per Site
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Data Structure
+- **Sites & Locations** - Geographic and operational organization
+- **Assets** - Physical equipment and infrastructure
+- **Asset Metadata** - Maintenance-specific information
+- **Service Tasks** - Scheduled and on-demand maintenance activities
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Core Entities
+- **Site**: Container for multiple assets
+- **Asset**: Name, Date, Mode, Metadata
+- **Asset Metadata**: Maintenance schedules, lifecycle data
+- **Service Tasks**: Maintenance activities and schedules
 
-## Laravel Sponsors
+## 🚀 Solution Components
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Priority Features
+- ✅ **Mobile Apps** (iOS and Android) - Asset information and service tasks
+- 🎁 **Web Interface** - Same functionalities with responsive design
 
-### Premium Partners
+### Business Focus
+- **Real-time Information** - Live data for customers, VEO LCS, and service companies
+- **Sustainability** - Lifecycle support and maintenance optimization
+- **Security** - Secure system and asset management
+- **MAAS** - Maintenance As A Service implementation
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## 🎨 Design Principles
 
-## Contributing
+### Core Values
+- **Simplicity** - Clean, intuitive interfaces
+- **User Friendly** - Logical steps and guided user experience
+- **Innovation** - Modern technical implementation with cloud-first approach
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Technical Focus
+- ☁️ **Cloud-based Database** - AWS/Azure integration
+- 📱 **Cross-platform Apps** - Native mobile and responsive web
+- 🔐 **Secure Access** - Role-based permissions and data protection
+- 🎯 **Guided UI** - Step-by-step user workflows
 
-## Code of Conduct
+## 🛠️ Technology Stack
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Backend
+- **Laravel 12** - Modern PHP framework
+- **Filament 3** - Admin panel and resource management
+- **Laravel Sanctum** - API authentication
+- **Spatie Permissions** - Role-based access control
+- **SQLite/MySQL** - Database layer
 
-## Security Vulnerabilities
+### API & Documentation
+- **RESTful API** - Mobile app integration
+- **OpenAPI/Swagger** - Comprehensive API documentation
+- **Real-time Updates** - WebSocket support for live data
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Frontend
+- **Flutter** - Cross-platform mobile development
+- **Responsive Web** - Filament-powered web interface
+- **Modern UI/UX** - Material Design principles
 
-## License
+### Cloud Infrastructure
+- **AWS/Azure** - Cloud database and hosting
+- **CDN** - Global content delivery
+- **Monitoring** - Application performance tracking
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 🚀 Getting Started
+
+### Prerequisites
+- PHP 8.2+
+- Composer
+- Node.js & NPM
+- Flutter SDK (for mobile development)
+
+### Installation
+
+1. **Clone and Install Dependencies**
+   ```bash
+   git clone <repository-url> veoset
+   cd veoset
+   composer install
+   npm install
+   ```
+
+2. **Environment Setup**
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
+
+3. **Database Setup**
+   ```bash
+   php artisan migrate --seed
+   ```
+
+4. **Filament Admin Setup**
+   ```bash
+   php artisan make:filament-user
+   ```
+
+5. **Start Development Server**
+   ```bash
+   composer run dev
+   ```
+
+### API Documentation
+Access the API documentation at: `http://localhost:8000/api/documentation`
+
+### Admin Panel
+Access the Filament admin panel at: `http://localhost:8000/admin`
+
+## 📱 Mobile App Development
+
+### Flutter Setup
+```bash
+cd mobile_app
+flutter pub get
+flutter run
+```
+
+### API Integration
+The Flutter app connects to the Laravel API for:
+- Authentication and authorization
+- Real-time asset data
+- Maintenance task management
+- Offline capability with sync
+
+## 🔧 Development Guide
+
+### Database Models
+- **Site Model** - Manages location and organizational data
+- **Asset Model** - Core asset information and relationships
+- **AssetMetadata Model** - Maintenance-specific data
+- **ServiceTask Model** - Maintenance activities and scheduling
+- **User Model** - Authentication and role management
+
+### API Endpoints
+- `GET /api/sites` - List all sites
+- `GET /api/sites/{id}/assets` - Site-specific assets
+- `GET /api/assets/{id}` - Asset details and metadata
+- `POST /api/service-tasks` - Create maintenance tasks
+- `PUT /api/service-tasks/{id}` - Update task status
+
+### Filament Resources
+- **SiteResource** - Site management interface
+- **AssetResource** - Asset CRUD operations
+- **ServiceTaskResource** - Maintenance task management
+- **UserResource** - User and role management
+
+## 🔒 Security & Authentication
+
+### User Roles
+- **VEO Admin** - Full system access
+- **Site Manager** - Site-specific management
+- **Maintenance Staff** - Task execution and reporting
+- **Customer** - Read-only asset information
+
+### API Security
+- JWT token authentication
+- Role-based API access
+- Rate limiting and throttling
+- Input validation and sanitization
+
+## 📊 Maintenance & Monitoring
+
+### Prevention Maintenance
+- **Scheduled Tasks** - Automated maintenance planning
+- **Lifecycle Tracking** - Asset sustainability monitoring
+- **Performance Metrics** - KPI dashboard and reporting
+- **Alert System** - Proactive maintenance notifications
+
+### System Monitoring
+- **Application Performance** - Response time and uptime tracking
+- **Database Performance** - Query optimization and monitoring
+- **API Usage** - Endpoint analytics and usage patterns
+- **Error Tracking** - Comprehensive logging and alerting
+
+## 🌐 Cloud Deployment
+
+### AWS Deployment
+- **EC2/ECS** - Application hosting
+- **RDS** - Managed database
+- **S3** - File storage and backups
+- **CloudFront** - CDN for global access
+
+### Azure Deployment
+- **App Service** - Web application hosting
+- **Azure Database** - Managed database service
+- **Blob Storage** - File and asset storage
+- **Application Insights** - Monitoring and analytics
+
+## 🤝 VEO Integration
+
+### VEO360 Connection
+- Integration with existing VEO360 platform
+- Asset scanning and data synchronization
+- Customer portal connectivity
+- Legacy system compatibility
+
+### Demo Features
+Visit VEO booth to explore:
+- **VEO360 Demos** - Live system demonstration
+- **Customer Portal** - End-user experience
+- **Scanned Assets** - Real asset data examples
+- **Technical Discussion** - Implementation guidance
+
+## 📖 Documentation
+
+### Technical Documentation
+- [API Documentation](./docs/api.md)
+- [Database Schema](./docs/database.md)
+- [Deployment Guide](./docs/deployment.md)
+- [Mobile App Guide](./docs/mobile.md)
+
+### User Guides
+- [Admin Panel Guide](./docs/admin-guide.md)
+- [Mobile App User Guide](./docs/mobile-guide.md)
+- [Maintenance Workflows](./docs/maintenance-guide.md)
+
+## 🤝 Contributing
+
+Please read our [Contributing Guidelines](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🆘 Support
+
+For technical support and questions:
+- Check VEO booth for mentorship
+- Review VEO360 and Customer Portal demos
+- Contact development team for technical implementation guidance
+
+---
+
+**Built with ❤️ for the Energy Industry - Focusing on Sustainability, Security, and User Experience**

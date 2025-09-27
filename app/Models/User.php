@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -44,5 +45,45 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function serviceTasks()
+    {
+        return $this->hasMany(ServiceTask::class, 'assigned_to');
+    }
+
+    public function isVeoAdmin(): bool
+    {
+        return $this->role === 'veo_admin';
+    }
+
+    public function isSiteManager(): bool
+    {
+        return $this->role === 'site_manager';
+    }
+
+    public function isMaintenanceStaff(): bool
+    {
+        return $this->role === 'maintenance_staff';
+    }
+
+    public function isCustomer(): bool
+    {
+        return $this->role === 'customer';
+    }
+
+    public function canManageAssets(): bool
+    {
+        return in_array($this->role, ['veo_admin', 'site_manager']);
+    }
+
+    public function canExecuteTasks(): bool
+    {
+        return in_array($this->role, ['veo_admin', 'site_manager', 'maintenance_staff']);
+    }
+
+    public function canViewAssets(): bool
+    {
+        return in_array($this->role, ['veo_admin', 'site_manager', 'maintenance_staff', 'customer']);
     }
 }

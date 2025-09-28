@@ -84,21 +84,30 @@ Main Control Panel (VEO) → Multiple Sites → Multiple Assets per Site
 - **Monitoring** - Application performance tracking
 
 ### Screens
+#### Home page
+![Homepage](front-end.png "VEOset Homepage")
 
-#### Dashboard Overview
-![Dashboard Overview](/public/images/dashboard.png "VEOset Dashboard")
+#### Dashboard
+![Dashboard Overview](bckend-admin02.png "VEOset Dashboard")
 
 #### Asset Management
-![Asset Management Interface](/public/images/assets.png "Asset Management")
+![Asset Management Interface](backend-admin03.png "Asset Management")
+
+<img src="front-end.png" alt="General Front End" width="200"/>(https://smartforce.fi/images/front-end.png)
+
+#### Asset Management
+![Asset Management Interface](backend-admin03.png "Asset Management")
+    <img src="mobile-ios.png" alt="Mobile App IOS" width="200"/>(https://smartforce.fi/images/mobile-ios.png)
+
+#### Asset Management
+![Asset Management Interface](bckend-admin03.png "Asset Management")
+    <img src="mobile-android.png" alt="Mobile App Android" width="200"/>(https://smartforce.fi/images/mobile-android.png)
+    <img src="bckend-admin01.png" alt="IoT Asset Details" width="200"/>(https://smartforce.fi/images/backend-admin01.png)
+    <img src="bckend-admin02.png" alt="Asset Details" width="200"/>(https://smartforce.fi/images/backend-admin02.png)
+    <img src="bckend-admin10.png" alt="Maintenance Tasks" width="200"/>(https://smartforce.fi/images/backend-admin10.png)
 
 #### Mobile App Screens
 <div style="display: flex; gap: 10px;">
-    <img src="front-end.png" alt="General Front End" width="200"/>(https://smartforce.fi/images/front-end.png)
-    <img src="mobile-ios.png" alt="Mobile App IOS" width="200"/>(https://smartforce.fi/images/mobile-ios.png)
-    <img src="mobile-android.png" alt="Mobile App Android" width="200"/>(https://smartforce.fi/images/mobile-android.png)
-    <img src="bckend-admin01.png" alt="IoT Asset Details" width="200"/>(https://smartforce.fi/images/bckend-admin01.png)
-    <img src="bckend-admin02.png" alt="Asset Details" width="200"/>(https://smartforce.fi/images/bckend-admin02.png)
-    <img src="bckend-admin10.png" alt="Maintenance Tasks" width="200"/>(https://smartforce.fi/images/bckend-admin10.png)
 
 </div>
 

@@ -167,10 +167,10 @@ Main Control Panel (VEO) → Multiple Sites → Multiple Assets per Site
    ```
 
 ### API Documentation
-Access the API documentation at: `http://localhost:8000/api/documentation`
+Access the API documentation at: `https://smartforce.fi/api/documentation`
 
 ### Admin Panel
-Access the Filament admin panel at: `http://localhost:8000/admin`
+Access the admin panel at: `https://smartforce.fi/admin`
 
 ## 📱 Mobile App Development
 
@@ -240,17 +240,7 @@ The Flutter app connects to the Laravel API for:
 
 ## 🌐 Cloud Deployment
 
-### AWS Deployment
-- **EC2/ECS** - Application hosting
-- **RDS** - Managed database
-- **S3** - File storage and backups
-- **CloudFront** - CDN for global access
-
-### Azure Deployment
-- **App Service** - Web application hosting
-- **Azure Database** - Managed database service
-- **Blob Storage** - File and asset storage
-- **Application Insights** - Monitoring and analytics
+- **OVH Cloud** - Hosting & Domain Controller
 
 ## 🤝 VEO Integration
 

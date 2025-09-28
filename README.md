@@ -93,12 +93,12 @@ Main Control Panel (VEO) → Multiple Sites → Multiple Assets per Site
 
 #### Mobile App Screens
 <div style="display: flex; gap: 10px;">
-    <img src="https://smartforce.fi/images/front-end.png" alt="General Front End" width="200"/>
-    <img src="https://smartforce.fi/images/mobile-ios.png" alt="Mobile App IOS" width="200"/>
-    <img src="https://smartforce.fi/images/mobile-android.png" alt="Mobile App Android" width="200"/>
-    <img src="https://smartforce.fi/images/bckend-admin01.png" alt="IoT Asset Details" width="200"/>
-    <img src="https://smartforce.fi/images/bckend-admin02.png" alt="Asset Details" width="200"/>
-    <img src="https://smartforce.fi/images/bckend-admin10.png" alt="Maintenance Tasks" width="200"/>
+    <img src="front-end.png" alt="General Front End" width="200"/>(https://smartforce.fi/images/front-end.png)
+    <img src="mobile-ios.png" alt="Mobile App IOS" width="200"/>(https://smartforce.fi/images/mobile-ios.png)
+    <img src="mobile-android.png" alt="Mobile App Android" width="200"/>(https://smartforce.fi/images/mobile-android.png)
+    <img src="bckend-admin01.png" alt="IoT Asset Details" width="200"/>(https://smartforce.fi/images/bckend-admin01.png)
+    <img src="bckend-admin02.png" alt="Asset Details" width="200"/>(https://smartforce.fi/images/bckend-admin02.png)
+    <img src="bckend-admin10.png" alt="Maintenance Tasks" width="200"/>(https://smartforce.fi/images/bckend-admin10.png)
 
 </div>
 

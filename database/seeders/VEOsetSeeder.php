@@ -26,21 +26,25 @@ class VEOsetSeeder extends Seeder
         $siteManager = User::factory()->siteManager()->create([
             'name' => 'John Site Manager',
             'email' => 'manager@veoset.com',
+            'password' => Hash::make('password'),
         ]);
 
         $technician1 = User::factory()->maintenanceStaff()->create([
             'name' => 'Mike Technician',
             'email' => 'mike@veoset.com',
+            'password' => Hash::make('password'),
         ]);
 
         $technician2 = User::factory()->maintenanceStaff()->create([
             'name' => 'Sarah Technician',
             'email' => 'sarah@veoset.com',
+            'password' => Hash::make('password'),
         ]);
 
         $customer = User::factory()->customer()->create([
             'name' => 'Energy Customer',
             'email' => 'customer@energycorp.com',
+            'password' => Hash::make('password'),
         ]);
 
         // Create sites

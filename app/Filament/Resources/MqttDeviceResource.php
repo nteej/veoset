@@ -99,7 +99,7 @@ class MqttDeviceResource extends Resource
                     ->schema([
                         Forms\Components\TextInput::make('device_id')
                             ->required()
-                            ->unique(ignoringRecord: true)
+                            //->unique(ignoringRecord: true)
                             ->maxLength(255),
                         Forms\Components\Select::make('asset_id')
                             ->relationship('asset', 'name')

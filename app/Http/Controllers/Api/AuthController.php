@@ -47,12 +47,15 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
+        \Log::info('Login attempt:', ['request_data' => $request->all(), 'content_type' => $request->header('Content-Type')]);
+
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required|string',
         ]);
 
         if ($validator->fails()) {
+            \Log::error('Validation failed:', ['errors' => $validator->errors()]);
             return response()->json([
                 'error' => 'Validation failed',
                 'messages' => $validator->errors()
@@ -62,6 +65,7 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (!Auth::attempt($credentials)) {
+            \Log::error('Auth attempt failed:', ['credentials' => $credentials, 'user_exists' => \App\Models\User::where('email', $credentials['email'])->exists()]);
             return response()->json([
                 'error' => 'Invalid credentials'
             ], 401);

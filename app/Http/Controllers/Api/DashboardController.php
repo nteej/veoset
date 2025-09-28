@@ -316,7 +316,8 @@ class DashboardController extends Controller
     {
         // System-wide alerts for VEO admins
         return [
-            'critical_health_count' => AssetHistory::where('created_at', '>=', now()->subHours(2))
+            'critical_health_count' => AssetHistory::selectRaw('asset_id, AVG(health_score) as avg_health')
+                ->where('created_at', '>=', now()->subHours(2))
                 ->whereNotNull('health_score')
                 ->groupBy('asset_id')
                 ->havingRaw('AVG(health_score) < 20')

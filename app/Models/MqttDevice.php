@@ -10,8 +10,10 @@ class MqttDevice extends Model
 {
     protected $fillable = [
         'device_id',
+        'name',
         'asset_id',
         'device_type',
+        'topic_prefix',
         'manufacturer',
         'model',
         'firmware_version',
@@ -22,16 +24,21 @@ class MqttDevice extends Model
         'battery_level',
         'signal_strength',
         'configuration',
+        'config',
         'registration_data',
+        'location',
+        'installation_date',
         'notes',
     ];
 
     protected $casts = [
         'capabilities' => 'array',
         'configuration' => 'array',
+        'config' => 'array',
         'registration_data' => 'array',
         'is_active' => 'boolean',
         'last_seen' => 'datetime',
+        'installation_date' => 'date',
     ];
 
     // Relationships

@@ -14,6 +14,7 @@ use Filament\Tables\Table;
 use Filament\Infolists\Infolist;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\BadgeEntry;
+use Filament\Notifications\Notification;
 use Filament\Support\Enums\FontWeight;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -231,12 +232,12 @@ class MqttDeviceResource extends Resource
                         $success = $mqttService->sendCommand($record->asset_id, 'ping');
 
                         if ($success) {
-                            Filament\Notifications\Notification::make()
+                            Notification::make()
                                 ->title('Ping sent successfully')
                                 ->success()
                                 ->send();
                         } else {
-                            Filament\Notifications\Notification::make()
+                            Notification::make()
                                 ->title('Failed to send ping')
                                 ->danger()
                                 ->send();

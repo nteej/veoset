@@ -55,6 +55,11 @@ class Asset extends Model
         return $this->hasMany(AssetHistory::class);
     }
 
+    public function latestHistory(): HasOne
+    {
+        return $this->hasOne(AssetHistory::class)->latest();
+    }
+
     public function scopeActive($query)
     {
         return $query->where('is_active', true);

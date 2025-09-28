@@ -107,6 +107,22 @@ class RolePermissionSeeder extends Seeder
             $adminUser->assignRole('veo_admin');
             $this->command->info("Assigned veo_admin role to admin@veoset.com");
         }
+        $managerUser = User::where('email', 'manager@veoset.com')->first();
+        if ($managerUser && !$managerUser->hasAnyRole(['site_manager'])) {
+            $managerUser->assignRole('site_manager');
+            $this->command->info("Assigned site_manager role to manager@veoset.com");
+        }
+        $maintenanceUser = User::where('email', 'mike@veoset.com')->first();
+        if ($maintenanceUser && !$maintenanceUser->hasAnyRole(['maintenance_staff'])) {
+            $maintenanceUser->assignRole('maintenance_staff');
+            $this->command->info("Assigned maintenance_staff role to mike@veoset.com");
+        }
+        $customerUser = User::where('email', 'customer@energycorp.com')->first();
+        if ($customerUser && !$customerUser->hasAnyRole(['customer'])) {
+            $customerUser->assignRole('customer');
+            $this->command->info("Assigned customer role to customer@energycorp.com");
+        }
+        
 
         $this->command->info('Roles and permissions created successfully!');
         $this->command->info('Created roles: veo_admin, site_manager, maintenance_staff, customer');

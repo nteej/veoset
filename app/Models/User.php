@@ -6,11 +6,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasApiTokens, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -52,6 +56,11 @@ class User extends Authenticatable
         return $this->hasMany(ServiceTask::class, 'assigned_to');
     }
 
+    public function sites()
+    {
+        return $this->belongsToMany(Site::class);
+    }
+
     public function isVeoAdmin(): bool
     {
         return $this->role === 'veo_admin';
@@ -85,5 +94,22 @@ class User extends Authenticatable
     public function canViewAssets(): bool
     {
         return in_array($this->role, ['veo_admin', 'site_manager', 'maintenance_staff', 'customer']);
+    }
+
+    // Filament interface methods
+    public function canAccessPanel(Panel $panel): bool
+    {
+        // Check if user has valid roles for Filament access
+        return $this->hasAnyRole(['veo_admin', 'site_manager', 'maintenance_staff', 'customer']);
+    }
+
+    public function getFilamentName(): string
+    {
+        return $this->name;
+    }
+
+    public function getFilamentAvatarUrl(): ?string
+    {
+        return $this->avatar_url ?? null;
     }
 }

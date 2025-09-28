@@ -50,6 +50,11 @@ class Asset extends Model
         return $this->hasMany(ServiceTask::class);
     }
 
+    public function history(): HasMany
+    {
+        return $this->hasMany(AssetHistory::class);
+    }
+
     public function scopeActive($query)
     {
         return $query->where('is_active', true);
@@ -78,5 +83,64 @@ class Asset extends Model
     public function needsMaintenance(): bool
     {
         return $this->next_maintenance_date && $this->next_maintenance_date <= now();
+    }
+
+    public function changeStatus(string $newStatus, $changedBy = null): bool
+    {
+        $previousStatus = $this->status;
+
+        if ($previousStatus === $newStatus) {
+            return false; // No change needed
+        }
+
+        $this->status = $newStatus;
+        $this->save();
+
+        // Record status change in history
+        \App\Models\AssetHistory::recordStatusChange($this, $previousStatus, $newStatus, $changedBy);
+
+        // Broadcast the status change (only if broadcasting is enabled)
+        if (config('broadcasting.default') === 'pusher') {
+            \App\Events\AssetStatusChanged::dispatch($this, $previousStatus, $newStatus, $changedBy);
+        } else {
+            // Just log the change when broadcasting is disabled
+            \Illuminate\Support\Facades\Log::info('Asset status changed', [
+                'asset_id' => $this->id,
+                'asset_name' => $this->name,
+                'site_id' => $this->site_id,
+                'site_name' => $this->site->name,
+                'previous_status' => $previousStatus,
+                'new_status' => $newStatus,
+                'changed_by' => $changedBy,
+            ]);
+        }
+
+        return true;
+    }
+
+    public function setMaintenanceMode($changedBy = null): bool
+    {
+        return $this->changeStatus('maintenance', $changedBy);
+    }
+
+    public function setOperational($changedBy = null): bool
+    {
+        return $this->changeStatus('operational', $changedBy);
+    }
+
+    public function setOffline($changedBy = null): bool
+    {
+        return $this->changeStatus('offline', $changedBy);
+    }
+
+    public function setEmergency($changedBy = null): bool
+    {
+        return $this->changeStatus('emergency', $changedBy);
+    }
+
+    public function simulateStatusChange(string $newStatus, $changedBy = 'sensor'): bool
+    {
+        // This method can be used for sensor-based status changes
+        return $this->changeStatus($newStatus, $changedBy);
     }
 }

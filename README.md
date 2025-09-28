@@ -83,6 +83,30 @@ Main Control Panel (VEO) → Multiple Sites → Multiple Assets per Site
 - **CDN** - Global content delivery
 - **Monitoring** - Application performance tracking
 
+### Screens
+
+#### Dashboard Overview
+![Dashboard Overview](/public/images/dashboard.png "VEOset Dashboard")
+
+#### Asset Management
+![Asset Management Interface](/public/images/assets.png "Asset Management")
+
+#### Mobile App Screens
+<div style="display: flex; gap: 10px;">
+    <img src="https://smartforce.fi/images/front-end.png" alt="General Front End" width="200"/>
+    <img src="https://smartforce.fi/images/mobile-ios.png" alt="Mobile App IOS" width="200"/>
+    <img src="https://smartforce.fi/images/mobile-android.png" alt="Mobile App Android" width="200"/>
+    <img src="https://smartforce.fi/images/bckend-admin01.png" alt="IoT Asset Details" width="200"/>
+    <img src="https://smartforce.fi/images/bckend-admin02.png" alt="Asset Details" width="200"/>
+    <img src="https://smartforce.fi/images/bckend-admin10.png" alt="Maintenance Tasks" width="200"/>
+
+</div>
+
+#### System Architecture
+![System Architecture](/public/images/architecture.png "VEOset Architecture")
+
+
+
 ## 🚀 Getting Started
 
 ### Prerequisites

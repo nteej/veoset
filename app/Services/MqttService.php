@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Asset;
 use App\Models\AssetHistory;
 use App\Models\MqttDevice;
+use App\Models\MqttConfiguration;
 use App\Events\AssetDataUpdated;
 use App\Events\AssetStatusChanged;
 use Illuminate\Support\Facades\Log;
@@ -18,28 +19,64 @@ class MqttService
     public $client;
     private $connectionSettings;
     private $isConnected = false;
+    private $config;
 
-    // MQTT Configuration
-    const MQTT_HOST = 'localhost';
-    const MQTT_PORT = 1883;
-    const MQTT_KEEPALIVE = 60;
-
-    // Topic patterns for VEO system
-    const TOPIC_ASSET_DATA = 'veo/assets/+/data';
-    const TOPIC_ASSET_STATUS = 'veo/assets/+/status';
-    const TOPIC_ASSET_HEALTH = 'veo/assets/+/health';
-    const TOPIC_ASSET_DIAGNOSTIC = 'veo/assets/+/diagnostic';
-    const TOPIC_DEVICE_REGISTER = 'veo/devices/register';
-    const TOPIC_DEVICE_HEARTBEAT = 'veo/devices/+/heartbeat';
+    // Topic patterns - will be prefixed with the configured topic prefix
+    const TOPIC_PATTERN_ASSET_DATA = 'assets/+/data';
+    const TOPIC_PATTERN_ASSET_STATUS = 'assets/+/status';
+    const TOPIC_PATTERN_ASSET_HEALTH = 'assets/+/health';
+    const TOPIC_PATTERN_ASSET_DIAGNOSTIC = 'assets/+/diagnostic';
+    const TOPIC_PATTERN_DEVICE_REGISTER = 'devices/register';
+    const TOPIC_PATTERN_DEVICE_HEARTBEAT = 'devices/+/heartbeat';
 
     public function __construct()
     {
-        $this->connectionSettings = new ConnectionSettings();
-        $this->connectionSettings
-            ->setKeepAliveInterval(self::MQTT_KEEPALIVE)
-            ->setConnectTimeout(3)
-            ->setUseTls(false)
-            ->setTlsSelfSignedAllowed(false);
+        // Load configuration from database or use defaults
+        $this->loadConfiguration();
+        
+        // Create connection settings based on the configuration
+        $this->connectionSettings = $this->config->getConnectionSettings();
+    }
+    
+    /**
+     * Load MQTT configuration from database
+     */
+    private function loadConfiguration(): void
+    {
+        try {
+            // Get the active configuration or the first one
+            $this->config = MqttConfiguration::getActive();
+            
+            // If no configuration exists, create a default one
+            if (!$this->config) {
+                $this->config = MqttConfiguration::create([
+                    'name' => 'Default Configuration',
+                    'host' => 'mqtt.smartforce.fi',
+                    'port' => 8883,
+                    'use_tls' => true,
+                    'username' => 'veosetuser',
+                    'password' => 'Welcome@mqtt',
+                    'is_active' => true,
+                ]);
+                
+                Log::info('MQTT Service: Created default configuration');
+            }
+        } catch (\Exception $e) {
+            Log::error('MQTT Service: Failed to load configuration', [
+                'error' => $e->getMessage(),
+            ]);
+            
+            // Create an in-memory config instance for fallback
+            $this->config = new MqttConfiguration([
+                'host' => 'mqtt.smartforce.fi',
+                'port' => 8883,
+                'use_tls' => true,
+                'username' => 'veosetuser',
+                'password' => 'Welcome@mqtt',
+                'keep_alive_interval' => 60,
+                'connect_timeout' => 3,
+            ]);
+        }
     }
 
     /**
@@ -48,27 +85,28 @@ class MqttService
     public function connect(): bool
     {
         try {
-            $this->client = new MqttClient(
-                self::MQTT_HOST,
-                self::MQTT_PORT,
-                'veo-laravel-' . uniqid(),
-                MqttClient::MQTT_3_1_1
-            );
+            // Refresh configuration in case it was updated
+            $this->loadConfiguration();
+            
+            // Create client with configuration
+            $this->client = $this->config->createClient('laravel-service');
 
+            // Connect using the settings
             $this->client->connect($this->connectionSettings, true);
             $this->isConnected = true;
 
             Log::info('MQTT Service: Connected to broker', [
-                'host' => self::MQTT_HOST,
-                'port' => self::MQTT_PORT,
+                'host' => $this->config->host,
+                'port' => $this->config->port,
+                'use_tls' => $this->config->use_tls,
             ]);
 
             return true;
         } catch (\Exception $e) {
             Log::error('MQTT Service: Connection failed', [
                 'error' => $e->getMessage(),
-                'host' => self::MQTT_HOST,
-                'port' => self::MQTT_PORT,
+                'host' => $this->config->host,
+                'port' => $this->config->port,
             ]);
 
             return false;
@@ -86,13 +124,14 @@ class MqttService
             }
         }
 
+        // Use the configured topics with the prefix
         $topics = [
-            self::TOPIC_ASSET_DATA => [$this, 'handleAssetData'],
-            self::TOPIC_ASSET_STATUS => [$this, 'handleAssetStatus'],
-            self::TOPIC_ASSET_HEALTH => [$this, 'handleAssetHealth'],
-            self::TOPIC_ASSET_DIAGNOSTIC => [$this, 'handleAssetDiagnostic'],
-            self::TOPIC_DEVICE_REGISTER => [$this, 'handleDeviceRegistration'],
-            self::TOPIC_DEVICE_HEARTBEAT => [$this, 'handleDeviceHeartbeat'],
+            $this->getFullTopic(self::TOPIC_PATTERN_ASSET_DATA) => [$this, 'handleAssetData'],
+            $this->getFullTopic(self::TOPIC_PATTERN_ASSET_STATUS) => [$this, 'handleAssetStatus'],
+            $this->getFullTopic(self::TOPIC_PATTERN_ASSET_HEALTH) => [$this, 'handleAssetHealth'],
+            $this->getFullTopic(self::TOPIC_PATTERN_ASSET_DIAGNOSTIC) => [$this, 'handleAssetDiagnostic'],
+            $this->getFullTopic(self::TOPIC_PATTERN_DEVICE_REGISTER) => [$this, 'handleDeviceRegistration'],
+            $this->getFullTopic(self::TOPIC_PATTERN_DEVICE_HEARTBEAT) => [$this, 'handleDeviceHeartbeat'],
         ];
 
         foreach ($topics as $topic => $callback) {
@@ -378,7 +417,7 @@ class MqttService
     /**
      * Publish message to MQTT topic
      */
-    public function publish(string $topic, array $data, int $qos = 0): bool
+    public function publish(string $topicPattern, array $data, array $replacements = [], int $qos = null): bool
     {
         if (!$this->isConnected) {
             if (!$this->connect()) {
@@ -387,23 +426,54 @@ class MqttService
         }
 
         try {
+            // Get the fully formed topic with prefix and replacements
+            $topic = $this->getFullTopic($topicPattern, $replacements);
+            
+            // Use configured QoS or provided QoS
+            $qos = $qos ?? $this->config->quality_of_service;
+            
+            // Convert data to JSON
             $message = json_encode($data);
-            $this->client->publish($topic, $message, $qos);
+            
+            // Publish with retain flag from config
+            $this->client->publish(
+                $topic, 
+                $message, 
+                $qos, 
+                $this->config->retain_messages
+            );
 
             Log::info('MQTT: Message published', [
                 'topic' => $topic,
                 'data_size' => strlen($message),
+                'qos' => $qos,
             ]);
 
             return true;
         } catch (\Exception $e) {
             Log::error('MQTT: Publish failed', [
-                'topic' => $topic,
+                'topic' => $topicPattern,
                 'error' => $e->getMessage(),
             ]);
 
             return false;
         }
+    }
+    
+    /**
+     * Get full topic with prefix
+     */
+    private function getFullTopic(string $topicPattern, array $replacements = []): string
+    {
+        $topic = $topicPattern;
+        
+        // Replace placeholders in the topic
+        foreach ($replacements as $key => $value) {
+            $topic = str_replace("{{$key}}", $value, $topic);
+        }
+        
+        // Add the prefix
+        return $this->config->topic_prefix . '/' . ltrim($topic, '/');
     }
 
     /**
@@ -411,7 +481,6 @@ class MqttService
      */
     public function sendCommand(int $assetId, string $command, array $parameters = []): bool
     {
-        $topic = "veo/assets/{$assetId}/commands";
         $data = [
             'command' => $command,
             'parameters' => $parameters,
@@ -419,7 +488,9 @@ class MqttService
             'source' => 'veo_system',
         ];
 
-        return $this->publish($topic, $data);
+        return $this->publish('assets/{asset_id}/commands', $data, [
+            'asset_id' => $assetId
+        ]);
     }
 
     /**

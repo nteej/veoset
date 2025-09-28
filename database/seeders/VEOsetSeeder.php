@@ -44,46 +44,38 @@ class VEOsetSeeder extends Seeder
     {
         $this->command->info('👥 Creating users...');
 
-        $users = [
-            [
-                'name' => 'VEO Admin',
-                'email' => 'admin@veoset.com',
-                'password' => Hash::make('VeoAdmin2024!'),
-                'role' => 'veo_admin'
-            ],
-            [
-                'name' => 'Mikko Korhonen',
-                'email' => 'manager@veoset.com',
-                'password' => Hash::make('Manager2024!'),
-                'role' => 'site_manager'
-            ],
-            [
-                'name' => 'Antti Virtanen',
-                'email' => 'mike@veoset.com',
-                'password' => Hash::make('Maintenance2024!'),
-                'role' => 'maintenance_staff'
-            ],
-            [
-                'name' => 'EnergyTech Solutions',
-                'email' => 'customer@energycorp.com',
-                'password' => Hash::make('Customer2024!'),
-                'role' => 'customer'
-            ]
-        ];
+        // Create admin user
+        $admin = User::create([
+            'name' => 'VEO Admin',
+            'email' => 'admin@veoset.com',
+            'password' => Hash::make('password'),
+            'role' => 'veo_admin',
+        ]);
 
-        foreach ($users as $userData) {
-            $role = $userData['role'];
-            unset($userData['role']);
+        // Create test users
+        $siteManager = User::factory()->siteManager()->create([
+            'name' => 'John Site Manager',
+            'email' => 'manager@veoset.com',
+        ]);
 
-            $user = User::firstOrCreate(
-                ['email' => $userData['email']],
-                $userData
-            );
+        $technician1 = User::factory()->maintenanceStaff()->create([
+            'name' => 'Mike Technician',
+            'email' => 'mike@veoset.com',
+        ]);
 
-            if (!$user->hasRole($role)) {
-                $user->assignRole($role);
-            }
-        }
+        $technician2 = User::factory()->maintenanceStaff()->create([
+            'name' => 'Sarah Technician',
+            'email' => 'sarah@veoset.com',
+        ]);
+
+        $customer = User::factory()->customer()->create([
+            'name' => 'Energy Customer',
+            'email' => 'customer@energycorp.com',
+        ]);
+        $this->command->info('Roles and permissions created successfully!');
+
+        $this->command->info('Created roles: veo_admin, site_manager, maintenance_staff, customer');
+
     }
 
     private function seedSites(): array

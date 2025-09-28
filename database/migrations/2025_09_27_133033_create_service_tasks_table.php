@@ -31,6 +31,7 @@ return new class extends Migration
             $table->text('notes')->nullable();
             $table->text('completion_notes')->nullable();
             $table->boolean('requires_shutdown')->default(false);
+            $table->datetime('due_date')->nullable();
             $table->timestamps();
         });
     }

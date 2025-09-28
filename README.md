@@ -83,36 +83,47 @@ Main Control Panel (VEO) → Multiple Sites → Multiple Assets per Site
 - **CDN** - Global content delivery
 - **Monitoring** - Application performance tracking
 
+
+#### System Architecture
+![System Architecture](architecture.png "VEOset Architecture")
+
+
 ### Screens
+
 #### Home page
 ![Homepage](front-end.png "VEOset Homepage")
 
+#### Authentication
+![Authentication Interface](backend-admin01.png "Asset Management")
+
 #### Dashboard
-![Dashboard Overview](bckend-admin02.png "VEOset Dashboard")
+![Dashboard Overview](backend-admin02.png "VEOset Dashboard")
 
 #### Asset Management
 ![Asset Management Interface](backend-admin03.png "Asset Management")
 
-<img src="front-end.png" alt="General Front End" width="200"/>(https://smartforce.fi/images/front-end.png)
+#### Site Management
+![Site Management Interface](backend-admin04.png "Site Management")
 
-#### Asset Management
-![Asset Management Interface](backend-admin03.png "Asset Management")
-    <img src="mobile-ios.png" alt="Mobile App IOS" width="200"/>(https://smartforce.fi/images/mobile-ios.png)
+#### Service Task Management
+![Service Task Management Interface](backend-admin05.png "Service Task Management")
 
-#### Asset Management
-![Asset Management Interface](bckend-admin03.png "Asset Management")
-    <img src="mobile-android.png" alt="Mobile App Android" width="200"/>(https://smartforce.fi/images/mobile-android.png)
-    <img src="bckend-admin01.png" alt="IoT Asset Details" width="200"/>(https://smartforce.fi/images/backend-admin01.png)
-    <img src="bckend-admin02.png" alt="Asset Details" width="200"/>(https://smartforce.fi/images/backend-admin02.png)
-    <img src="bckend-admin10.png" alt="Maintenance Tasks" width="200"/>(https://smartforce.fi/images/backend-admin10.png)
+#### MQTT Device Management
+![MQTT Device Management Interface](backend-admin06.png "MQTT Device Management")
 
-#### Mobile App Screens
-<div style="display: flex; gap: 10px;">
+#### Users Management
+![Users Management Interface](backend-admin07.png "Users Management")
 
-</div>
+#### Role Management
+![Role Management Interface](backend-admin08.png "Role Management")
 
-#### System Architecture
-![System Architecture](/public/images/architecture.png "VEOset Architecture")
+#### Permission Management
+![Permission Management Interface](backend-admin09.png "Permission Management")
+#### MQTT Server Management
+![MQTT Server Management Interface](backend-admin10.png "MQTT Server Management")
+#### Asset History Management
+![PAsset History Management Interface](backend-admin11.png "Asset History Management")
+
 
 
 

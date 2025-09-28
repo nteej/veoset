@@ -6,6 +6,8 @@ use App\Filament\Resources\AssetHistoryResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Actions\Action;
+use Filament\Notifications\Notification;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Asset;
 use App\Models\AssetHistory;
 
@@ -50,11 +52,14 @@ class ListAssetHistories extends ListRecords
                         $data['shift_type'],
                         $data['shift_start'],
                         $data['shift_end'],
-                        auth()->id(),
+                        Auth::id(),
                         $data['notes'] ?? null
                     );
 
-                    $this->notify('success', 'Shift report generated successfully');
+                    \Filament\Notifications\Notification::make()
+                        ->success()
+                        ->title('Shift report generated successfully')
+                        ->send();
                 }),
 
             Action::make('simulateSensorData')
@@ -117,7 +122,10 @@ class ListAssetHistories extends ListRecords
                         AssetHistory::recordDiagnosticScan($asset, $diagnosticData);
                     }
 
-                    $this->notify('success', 'Sensor data simulated successfully');
+                    \Filament\Notifications\Notification::make()
+                        ->success()
+                        ->title('Sensor data simulated successfully')
+                        ->send();
                 }),
         ];
     }

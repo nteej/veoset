@@ -38,10 +38,10 @@ class PermissionSeeder extends Seeder
         }
 
         // Create roles and assign permissions
-        $veoAdmin = Role::firstOrCreate(['name' => 'VEO Admin']);
+        $veoAdmin = Role::firstOrCreate(['name' => 'veo_admin']);
         $veoAdmin->givePermissionTo(Permission::all());
 
-        $siteManager = Role::firstOrCreate(['name' => 'Site Manager']);
+        $siteManager = Role::firstOrCreate(['name' => 'site_manager']);
         $siteManager->givePermissionTo([
             'view_asset_history',
             'generate_shift_reports',
@@ -53,7 +53,7 @@ class PermissionSeeder extends Seeder
             'view_reports',
         ]);
 
-        $maintenanceStaff = Role::firstOrCreate(['name' => 'Maintenance Staff']);
+        $maintenanceStaff = Role::firstOrCreate(['name' => 'maintenance_staff']);
         $maintenanceStaff->givePermissionTo([
             'view_own_asset_history',
             'generate_shift_reports',
@@ -62,7 +62,7 @@ class PermissionSeeder extends Seeder
             'execute_tasks',
         ]);
 
-        $technician = Role::firstOrCreate(['name' => 'Technician']);
+        $technician = Role::firstOrCreate(['name' => 'technician']);
         $technician->givePermissionTo([
             'view_own_asset_history',
             'generate_shift_reports',
@@ -70,7 +70,7 @@ class PermissionSeeder extends Seeder
             'view_assets',
         ]);
 
-        $customer = Role::firstOrCreate(['name' => 'Customer']);
+        $customer = Role::firstOrCreate(['name' => 'customer']);
         $customer->givePermissionTo([
             'view_assets',
             'view_reports',

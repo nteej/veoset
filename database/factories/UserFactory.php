@@ -26,7 +26,6 @@ class UserFactory extends Factory
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'role' => fake()->randomElement(['veo_admin', 'site_manager', 'maintenance_staff', 'customer']),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
@@ -45,29 +44,29 @@ class UserFactory extends Factory
 
     public function veoAdmin(): static
     {
-        return $this->state(fn (array $attributes) => [
-            'role' => 'veo_admin',
-        ]);
+        return $this->afterCreating(function ($user) {
+            $user->assignRole('veo_admin');
+        });
     }
 
     public function siteManager(): static
     {
-        return $this->state(fn (array $attributes) => [
-            'role' => 'site_manager',
-        ]);
+        return $this->afterCreating(function ($user) {
+            $user->assignRole('site_manager');
+        });
     }
 
     public function maintenanceStaff(): static
     {
-        return $this->state(fn (array $attributes) => [
-            'role' => 'maintenance_staff',
-        ]);
+        return $this->afterCreating(function ($user) {
+            $user->assignRole('maintenance_staff');
+        });
     }
 
     public function customer(): static
     {
-        return $this->state(fn (array $attributes) => [
-            'role' => 'customer',
-        ]);
+        return $this->afterCreating(function ($user) {
+            $user->assignRole('customer');
+        });
     }
 }

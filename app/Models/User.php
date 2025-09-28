@@ -25,7 +25,6 @@ class User extends Authenticatable implements FilamentUser
         'name',
         'email',
         'password',
-        'role',
     ];
 
     /**
@@ -63,37 +62,37 @@ class User extends Authenticatable implements FilamentUser
 
     public function isVeoAdmin(): bool
     {
-        return $this->role === 'veo_admin';
+        return $this->hasRole('veo_admin');
     }
 
     public function isSiteManager(): bool
     {
-        return $this->role === 'site_manager';
+        return $this->hasRole('site_manager');
     }
 
     public function isMaintenanceStaff(): bool
     {
-        return $this->role === 'maintenance_staff';
+        return $this->hasRole('maintenance_staff');
     }
 
     public function isCustomer(): bool
     {
-        return $this->role === 'customer';
+        return $this->hasRole('customer');
     }
 
     public function canManageAssets(): bool
     {
-        return in_array($this->role, ['veo_admin', 'site_manager']);
+        return $this->hasAnyRole(['veo_admin', 'site_manager']);
     }
 
     public function canExecuteTasks(): bool
     {
-        return in_array($this->role, ['veo_admin', 'site_manager', 'maintenance_staff']);
+        return $this->hasAnyRole(['veo_admin', 'site_manager', 'maintenance_staff']);
     }
 
     public function canViewAssets(): bool
     {
-        return in_array($this->role, ['veo_admin', 'site_manager', 'maintenance_staff', 'customer']);
+        return $this->hasAnyRole(['veo_admin', 'site_manager', 'maintenance_staff', 'customer']);
     }
 
     // Filament interface methods

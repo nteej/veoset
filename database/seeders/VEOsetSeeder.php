@@ -49,33 +49,40 @@ class VEOsetSeeder extends Seeder
             'name' => 'VEO Admin',
             'email' => 'admin@veoset.com',
             'password' => Hash::make('password'),
-            'role' => 'veo_admin',
         ]);
+        $admin->assignRole('veo_admin');
 
         // Create test users
-        $siteManager = User::factory()->siteManager()->create([
+        $siteManager = User::create([
             'name' => 'John Site Manager',
             'email' => 'manager@veoset.com',
+            'password' => Hash::make('password'),
         ]);
+        $siteManager->assignRole('site_manager');
 
-        $technician1 = User::factory()->maintenanceStaff()->create([
+        $technician1 = User::create([
             'name' => 'Mike Technician',
             'email' => 'mike@veoset.com',
+            'password' => Hash::make('password'),
         ]);
+        $technician1->assignRole('maintenance_staff');
 
-        $technician2 = User::factory()->maintenanceStaff()->create([
+        $technician2 = User::create([
             'name' => 'Sarah Technician',
             'email' => 'sarah@veoset.com',
+            'password' => Hash::make('password'),
         ]);
+        $technician2->assignRole('maintenance_staff');
 
-        $customer = User::factory()->customer()->create([
+        $customer = User::create([
             'name' => 'Energy Customer',
             'email' => 'customer@energycorp.com',
+            'password' => Hash::make('password'),
         ]);
+        $customer->assignRole('customer');
         $this->command->info('Roles and permissions created successfully!');
 
         $this->command->info('Created roles: veo_admin, site_manager, maintenance_staff, customer');
-
     }
 
     private function seedSites(): array
@@ -628,7 +635,7 @@ class VEOsetSeeder extends Seeder
         ];
 
         foreach ($assets as $asset) {
-            $applicableTasks = array_filter($taskTemplates, function($task) use ($asset) {
+            $applicableTasks = array_filter($taskTemplates, function ($task) use ($asset) {
                 return in_array($asset->asset_type, $task['asset_types']);
             });
 

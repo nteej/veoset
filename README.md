@@ -135,6 +135,13 @@ Main Control Panel (VEO) → Multiple Sites → Multiple Assets per Site
 - Node.js & NPM
 - Flutter SDK (for mobile development)
 
+### Demo Logins
+
+- VEOSet Admin admin@veoset.com / password
+- Site Manager manager@veoset.com / password
+- Technician   mike@veoset.com / password
+- Customer     customer@energycorp.com / password
+
 ### Installation
 
 1. **Clone and Install Dependencies**
